@@ -39,9 +39,9 @@ This command initialize new Locklift project, filled with samples:
 │   └── Sample.sol
 ├── locklift.config.js
 ├── scripts
-│   └── 1-deploy-sample.js
+│   └── 1-deploy-sample.ts
 └── test
-    └── sample-test.js
+    └── Sample.spec.ts
 ```
 
 ## Configuration
@@ -50,35 +50,38 @@ By default, the configuration file is called `locklift.config.js`. Here's the ba
 
 ```javascript
 module.exports = {
-  compiler: {
-    // Specify path to your TON-Solidity-Compiler
-    path: '/usr/bin/solc-ton',
-  },
-  linker: {
-    // Path to your TVM Linker
-    path: '/usr/bin/tvm_linker',
-  },
+  compiler: { path: '/usr/local/bin/solc-ton' },
+  linker: { path: '/usr/local/bin/tvm-linker' },
   networks: {
-    // You can use TON labs graphql endpoints or local node
     local: {
       ton_client: {
-        // See the TON client specification for all available options
-        network: {
-          server_address: 'http://localhost/',
-        },
+        network: { server_address: 'http://localhost/' },
       },
-      // This giver is default local-node giver
       giver: {
-        address: '0:841288ed3b55d9cdafa806807f02a0ae0c169aa5edfe88a789a6482429756a94',
-        abi: { "ABI version": 1, "functions": [ { "name": "constructor", "inputs": [], "outputs": [] }, { "name": "sendGrams", "inputs": [ {"name":"dest","type":"address"}, {"name":"amount","type":"uint64"} ], "outputs": [] } ], "events": [], "data": [] },
+        address:
+          '0:841288ed3b55d9cdafa806807f02a0ae0c169aa5edfe88a789a6482429756a94',
+        abi: {
+          'ABI version': 1,
+          functions: [
+            { name: 'constructor', inputs: [], outputs: [] },
+            {
+              name: 'sendGrams',
+              inputs: [
+                { name: 'dest', type: 'address' },
+                { name: 'amount', type: 'uint64' },
+              ],
+              outputs: [],
+            },
+          ],
+          events: [],
+          data: [],
+        },
         key: '',
       },
-      // Use tonos-cli to generate your phrase
-      // !!! Never commit it in your repos !!!
       keys: {
         phrase: '',
         amount: 20,
-      }
+      },
     },
   },
 };
@@ -125,10 +128,10 @@ $ locklift test --config locklift.config.js --network local
 
 ## Run script
 
-This command runs an arbitrary Node JS script with already configured `locklift` module.
+This command runs an arbitrary Node JS scripts with already configured `locklift` module.
 
 ```
-$ locklift run --config locklift.config.js --network local --script scripts/1-deploy-sample.js 
+$ locklift run --config locklift.config.js --network local --script scripts/1-deploy-sample.ts 
 Sample deployed at: 0:a56a1882231c9d901a1576ec2187575b01d1e33dd71108525b205784a41ae6d0
 ```
 
@@ -143,7 +146,7 @@ This module provides the set of objects and functions, for low level interacting
 #### `locklift.ton.client`
 
 The Locklift is built around TON Labs [ton-client-js](https://github.com/tonlabs/ton-client-js) module.
-By using `locklift.ton.client` you can access the already configured `TonClient` oject.
+By using `locklift.ton.client` you can access the already configured `TonClient` object.
 The configuration should be stored in your config file at `networks[network].ton_client`.
 
 #### `locklift.ton.getBalance`
@@ -190,7 +193,7 @@ This method returns the special [Account](#account) contract.
 
 ### Contract
 
-Basic object which wraps the TON smart contract. Allows to sends the run messages into the network,
+Basic object which wraps the TON smart contract. Allows to send the run messages into the network,
 or run messages locally, to derive some data from the smart contract.
 
 ### Account
@@ -200,7 +203,7 @@ which allows to interact with TON contracts, by sending internal message from "A
 It encodes the specified method + params into the internal message, according to the
 target contract's ABI and call the Account's external method.
 
-The basic Account contract is placed into the [Account.sol](contracts/contracts/Account.sol).
+The basic Account contract is placed into the [Account.sol](./node_modules/@broxus/contracts/contracts/wallets/Account.sol).
 
 ```
 const Account = await locklift.factory.getAccount();

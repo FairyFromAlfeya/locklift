@@ -1,11 +1,9 @@
 pragma solidity >= 0.6.0;
+
 pragma AbiHeader expire;
 pragma AbiHeader pubkey;
 
-
 contract Sample {
-    uint16 static _nonce;
-
     uint state;
 
     event StateChange(uint _state);
@@ -18,17 +16,13 @@ contract Sample {
 
     function setState(uint _state) public {
         tvm.accept();
+
         state = _state;
 
         emit StateChange(_state);
     }
 
-    function getDetails()
-        external
-        view
-    returns (
-        uint _state
-    ) {
+    function getDetails() external view returns (uint _state) {
         return state;
     }
 }
