@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import { program } from 'commander';
 import { program as initProgram } from './commands/init';
 import { program as buildProgram } from './commands/build';
