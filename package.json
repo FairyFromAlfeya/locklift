@@ -1,15 +1,15 @@
 {
   "name": "@fairyfromalfeya/locklift",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "Node JS framework for working with FreeTON contracts. Inspired by Truffle and Hardhat. Helps you to build, test, run and maintain your smart contracts.",
-  "main": "index.ts",
+  "main": "dist/locklift/index.js",
+  "types": "dist/locklift/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc",
-    "build:sample": "npx locklift build --config sample-project/locklift.config.js"
+    "build": "tsc"
   },
   "bin": {
-    "locklift": "locklift/cli/index.js"
+    "locklift": "dist/locklift/cli/index.js"
   },
   "repository": {
     "type": "git",
